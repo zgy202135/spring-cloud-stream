@@ -2,9 +2,11 @@ package com.spring.cloud.stream.service.impl;
 
 import com.spring.cloud.stream.service.ProducerService;
 import com.spring.cloud.stream.stream.rabbit.Producer;
+import com.spring.cloud.stream.stream.rabbit.Reveice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
@@ -22,9 +24,9 @@ public class ProducerServiceImpl implements ProducerService {
 
     private static final Logger log = LoggerFactory.getLogger(ProducerService.class);
 
-    private static MessageChannel messageTemplate;
     @Autowired
-    Producer producer;
+    @Qualifier(Reveice.customChannel)
+    private MessageChannel output;
 
     /**
      * 发送消息到指定主题
@@ -33,9 +35,9 @@ public class ProducerServiceImpl implements ProducerService {
      */
     @Override
     public void sendMessage(String message) {
-        messageTemplate = producer.output();
+//        messageTemplate = producer.output();
         log.info("发布消息：{}",message);
         Message<String> source = MessageBuilder.withPayload(message).build();
-        messageTemplate.send(source);
+        output.send(source);
     }
 }
