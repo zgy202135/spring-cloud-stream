@@ -1,7 +1,11 @@
 package com.spring.cloud.stream.stream.rabbit;
 
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.SubscribableChannel;
 import org.springframework.stereotype.Component;
 
 import javax.xml.transform.Source;
@@ -15,7 +19,17 @@ import javax.xml.transform.Source;
  */
 @Component
 public interface Producer extends Source {
-
-    @Output(Reveice.customChannel)
+    /**
+     *
+     * @return
+     */
+    @Output("exchangeOut")
     MessageChannel output();
+
+    /**
+     * 绑定消费通道
+     * @return
+     */
+    @Input("exchangeOut1")
+    SubscribableChannel receive();
 }

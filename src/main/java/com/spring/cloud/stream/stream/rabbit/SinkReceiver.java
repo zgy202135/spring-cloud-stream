@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.cloud.stream.messaging.Source;
 
 /**
  * @Title: stream
@@ -13,14 +14,9 @@ import org.springframework.cloud.stream.messaging.Sink;
  * @Date 2020-05-14 21:57
  * @Description: rabbit消费者
  */
-@EnableBinding(value = {Sink.class, Producer.class})
+@EnableBinding(value = {Producer.class})
 public class SinkReceiver {
 
-    private static final Logger log = LoggerFactory.getLogger(SinkReceiver.class);
 
 
-    @StreamListener(Reveice.customChannel)
-    public void receive(Object message){
-        log.info("消费消息：{}",message);
-    }
 }
